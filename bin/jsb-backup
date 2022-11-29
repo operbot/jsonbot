@@ -10,12 +10,12 @@
 
 # bootstrap
 
-from jsb.lib.datadir import getdatadir
-from jsb.utils.popen import Popen
-from jsb.utils.generic import gethighest
-from jsb.utils.log import setloglevel
+from jsonbot.lib.datadir import getdatadir
+from jsonbot.utils.popen import Popen
+from jsonbot.utils.generic import gethighest
+from jsonbot.utils.log import setloglevel
 from optparse import OptionParser
-from jsb.version import getversion
+from jsonbot.version import getversion
 from subprocess import Popen
 import os
 import sys
@@ -83,15 +83,15 @@ print("home is %s" % home)
 if opts.target:
     target = opts.target
 else:
-    target = home + os.sep + "jsb-backups"
+    target = home + os.sep + "jsonbot-backups"
 if not os.path.isdir(target):
     os.mkdir(target)
 print("target is %s" % target)
 
-targetfile = target + os.sep + "jsb.backup.tar.gz"
+targetfile = target + os.sep + "jsonbot.backup.tar.gz"
 
 if os.path.isfile(targetfile):
-    highest = gethighest(target, "jsb.backup.tar.gz")
+    highest = gethighest(target, "jsonbot.backup.tar.gz")
     print("renaming backup tar to %s" % highest)
     os.rename(targetfile, target + os.sep + highest)
 

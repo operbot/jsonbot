@@ -44,10 +44,7 @@ def dosed(filename, sedstring):
     f = open(filename, "r")
     tmp = filename + ".tmp"
     fout = open(tmp, "w")
-    if "/" in sedstring:
-        seds = sedstring.split("/")
-    elif "#" in sedstring:
-        seds = sedstring.split("#")
+    seds = sedstring.split("/")
     fr = seds[1].replace("\\", "")
     to = seds[2].replace("\\", "")
     try:

@@ -4,15 +4,15 @@
 
 """ stop a running bot """
 
-# jsb imports
+# jsonbot imports
 
 from optparse import OptionParser
 import sys
 import os
 from subprocess import Popen
-from jsb.version import getversion
-from jsb.lib.datadir import getdatadir
-from jsb.utils.popen import gozerpopen
+from jsonbot.version import getversion
+from jsonbot.lib.datadir import getdatadir
+from jsonbot.utils.popen import gozerpopen
 import os
 import sys
 
@@ -48,7 +48,7 @@ if opts.datadir and not os.path.isdir(opts.datadir):
     os.mkdir(opts.datadir)
 
 ddir = opts.datadir or getdatadir()
-PID = open("%s/run/jsb.pid" % ddir, "r").read()
+PID = open("%s/run/jsonbot.pid" % ddir, "r").read()
 print("PID is %s" % PID)
 execstring = "kill -s TERM %s" % PID
 print(execstring)

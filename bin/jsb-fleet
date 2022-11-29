@@ -12,19 +12,19 @@ import sys
 import time
 import warnings
 
-import jsb
-from jsb.lib.boot import boot
-from jsb.lib.datadir import getdatadir, makedirs, setdatadir
-from jsb.lib.exit import globalshutdown
-from jsb.lib.fleet import getfleet
-from jsb.lib.partyline import partyline
-from jsb.lib.threads import start_new_thread
-from jsb.lib.users import users_boot
-from jsb.utils.exception import handle_exception
-from jsb.utils.log import setloglevel
-from jsb.utils.mainloop import mainloop
-from jsb.utils.opts import makefleetopts
-from jsb.version import getversion
+import jsonbot
+from jsonbot.lib.boot import boot
+from jsonbot.lib.datadir import getdatadir, makedirs, setdatadir
+from jsonbot.lib.exit import globalshutdown
+from jsonbot.lib.fleet import getfleet
+from jsonbot.lib.partyline import partyline
+from jsonbot.lib.threads import start_new_thread
+from jsonbot.lib.users import users_boot
+from jsonbot.utils.exception import handle_exception
+from jsonbot.utils.log import setloglevel
+from jsonbot.utils.mainloop import mainloop
+from jsonbot.utils.opts import makefleetopts
+from jsonbot.version import getversion
 
 warnings.simplefilter("ignore")
 
@@ -46,7 +46,7 @@ if opts.datadir:
 
 print(getversion("FLEET"))
 
-# jsb imports
+# jsonbot imports
 
 
 fleet = getfleet(opts.datadir)

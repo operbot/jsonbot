@@ -4,15 +4,15 @@
 
 import sys
 import os
-from jsb.lib.boot import boot
-from jsb.lib.fleet import getfleet
-from jsb.lib.config import makedefaultconfig
+from jsonbot.lib.boot import boot
+from jsonbot.lib.fleet import getfleet
+from jsonbot.lib.config import makedefaultconfig
 import logging
-from jsb.utils.log import setloglevel
-from jsb.lib.datadir import makedirs, getdatadir, setdatadir
+from jsonbot.utils.log import setloglevel
+from jsonbot.lib.datadir import makedirs, getdatadir, setdatadir
 from optparse import OptionParser
-from jsb.version import getversion
-from jsb.utils.generic import isdebian, botuser
+from jsonbot.version import getversion
+from jsonbot.utils.generic import isdebian, botuser
 import warnings
 
 warnings.simplefilter("ignore")

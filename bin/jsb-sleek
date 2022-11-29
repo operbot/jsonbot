@@ -4,17 +4,17 @@
 
 # bootstrap
 
-from jsb.utils.opts import makesxmppconfig
-from jsb.lib.threads import start_new_thread
-from jsb.utils.mainloop import mainloop
-from jsb.utils.exception import handle_exception
-from jsb.lib.exit import globalshutdown
-from jsb.lib.fleet import getfleet
-from jsb.lib.errors import NoOwnerSet
-from jsb.lib.boot import boot
-from jsb.utils.log import setloglevel
-from jsb.utils.opts import makesxmppopts
-from jsb.version import getversion
+from jsonbot.utils.opts import makesxmppconfig
+from jsonbot.lib.threads import start_new_thread
+from jsonbot.utils.mainloop import mainloop
+from jsonbot.utils.exception import handle_exception
+from jsonbot.lib.exit import globalshutdown
+from jsonbot.lib.fleet import getfleet
+from jsonbot.lib.errors import NoOwnerSet
+from jsonbot.lib.boot import boot
+from jsonbot.utils.log import setloglevel
+from jsonbot.utils.opts import makesxmppopts
+from jsonbot.version import getversion
 import sys
 import os
 import logging
@@ -47,11 +47,11 @@ setloglevel(opts.loglevel or "warn", not opts.nocolors)
 if opts.datadir:
     if not os.path.isdir(opts.datadir):
         os.mkdir(opts.datadir)
-    from jsb.lib.datadir import setdatadir
+    from jsonbot.lib.datadir import setdatadir
 
     setdatadir(opts.datadir)
 
-# remaining jsb imports
+# remaining jsonbot imports
 
 
 # boot the bot
@@ -91,7 +91,7 @@ if got:
 # start the bot
 
 try:
-    from jsb.drivers.sleek.bot import SleekBot
+    from jsonbot.drivers.sleek.bot import SleekBot
 
     bot = SleekBot(cfg, register=opts.doregister)
 except NoOwnerSet as ex:

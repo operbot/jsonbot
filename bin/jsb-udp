@@ -2,16 +2,16 @@
 #
 #
 
-""" send udp packets with data to be displayed to the jsb bot. """
+""" send udp packets with data to be displayed to the jsonbot bot. """
 
 # boot
 
 import string
 import copy
 from optparse import OptionParser
-from jsb.version import getversion
-from jsb.lib.config import Config
-import jsb
+from jsonbot.version import getversion
+from jsonbot.lib.config import Config
+import jsonbot
 import socket
 import sys
 import os

@@ -7,21 +7,21 @@
 import sys
 import os
 import logging
-import jsb
-import jsb.lib.users as users
-from jsb.lib.eventhandler import mainhandler
-from jsb.lib.threads import start_new_thread
-from jsb.utils.mainloop import mainloop
-from jsb.lib.fleet import getfleet
-from jsb.lib.errors import NoOwnerSet
-from jsb.utils.log import setloglevel
-from jsb.lib.boot import plugin_packages, boot
-from jsb.drivers.irc.bot import IRCBot
-from jsb.lib.partyline import partyline
-from jsb.utils.exception import handle_exception
-from jsb.version import getversion
-from jsb.lib.datadir import setdatadir, getdatadir
-from jsb.utils.opts import makeircconfig, makeircopts
+import jsonbot
+import jsonbot.lib.users as users
+from jsonbot.lib.eventhandler import mainhandler
+from jsonbot.lib.threads import start_new_thread
+from jsonbot.utils.mainloop import mainloop
+from jsonbot.lib.fleet import getfleet
+from jsonbot.lib.errors import NoOwnerSet
+from jsonbot.utils.log import setloglevel
+from jsonbot.lib.boot import plugin_packages, boot
+from jsonbot.drivers.irc.bot import IRCBot
+from jsonbot.lib.partyline import partyline
+from jsonbot.utils.exception import handle_exception
+from jsonbot.version import getversion
+from jsonbot.lib.datadir import setdatadir, getdatadir
+from jsonbot.utils.opts import makeircconfig, makeircopts
 import warnings
 
 warnings.simplefilter("ignore")
@@ -42,7 +42,7 @@ if opts.datadir:
 print(getversion("IRC"))
 
 
-# jsb imports
+# jsonbot imports
 
 
 # basic imports

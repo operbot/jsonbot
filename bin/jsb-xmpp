@@ -5,22 +5,22 @@
 # bootstrap
 
 import sys
-from jsb.version import getversion
+from jsonbot.version import getversion
 import os
-import jsb
-import jsb.lib.users as users
-from jsb.utils.exception import handle_exception
-from jsb.lib.exit import globalshutdown
-from jsb.lib.datadir import setdatadir, getdatadir
-from jsb.utils.opts import makesxmppopts, makesxmppconfig
-from jsb.utils.mainloop import mainloop
-from jsb.lib.fleet import getfleet
-from jsb.lib.errors import NoOwnerSet
-from jsb.lib.config import Config, getmainconfig
-from jsb.utils.log import setloglevel
-from jsb.lib.boot import plugin_packages, boot
-from jsb.drivers.xmpp.bot import SXMPPBot
-from jsb.lib.threads import start_new_thread
+import jsonbot
+import jsonbot.lib.users as users
+from jsonbot.utils.exception import handle_exception
+from jsonbot.lib.exit import globalshutdown
+from jsonbot.lib.datadir import setdatadir, getdatadir
+from jsonbot.utils.opts import makesxmppopts, makesxmppconfig
+from jsonbot.utils.mainloop import mainloop
+from jsonbot.lib.fleet import getfleet
+from jsonbot.lib.errors import NoOwnerSet
+from jsonbot.lib.config import Config, getmainconfig
+from jsonbot.utils.log import setloglevel
+from jsonbot.lib.boot import plugin_packages, boot
+from jsonbot.drivers.xmpp.bot import SXMPPBot
+from jsonbot.lib.threads import start_new_thread
 import warnings
 
 warnings.simplefilter("ignore")
@@ -29,7 +29,7 @@ warnings.simplefilter("ignore")
 sys.path.insert(0, os.getcwd())
 
 
-# jsb impors
+# jsonbot impors
 
 
 # basic imports

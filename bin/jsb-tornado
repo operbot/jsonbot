@@ -2,7 +2,7 @@
 #
 #
 
-""" jsb tornado dispatch handler.  dispatches remote commands.  """
+""" jsonbot tornado dispatch handler.  dispatches remote commands.  """
 
 import select
 import logging
@@ -13,30 +13,30 @@ import tornado.httpserver
 import tornado.auth
 import tornado.ioloop
 import tornado.web
-from jsb.api import api_check
-from jsb.lib.floodcontrol import floodcontrol
-from jsb.lib.commands import cmnds
-from jsb.lib.exit import globalshutdown
-from jsb.lib.partyline import partyline
-from jsb.utils.source import getsource
-from jsb.imports import gettornado
-from jsb.drivers.tornado.event import TornadoEvent
-from jsb.drivers.tornado.bot import TornadoBot
-from jsb.lib.threads import start_new_thread
-from jsb.utils.lazydict import LazyDict
-from jsb.lib.errors import NoSuchCommand, NoInput
-from jsb.lib.fleet import getfleet
-from jsb.utils.exception import handle_exception, exceptionmsg
-from jsb.lib.persist import Persist
-from jsb.lib.plugins import plugs
-from jsb.utils.url import getpostdata, useragent
-from jsb.utils.xmpp import stripped
-from jsb.utils.generic import fromenc, toenc
-from jsb.lib.boot import boot
-from jsb.utils.log import setloglevel
-from jsb.lib.datadir import getdatadir
+from jsonbot.api import api_check
+from jsonbot.lib.floodcontrol import floodcontrol
+from jsonbot.lib.commands import cmnds
+from jsonbot.lib.exit import globalshutdown
+from jsonbot.lib.partyline import partyline
+from jsonbot.utils.source import getsource
+from jsonbot.imports import gettornado
+from jsonbot.drivers.tornado.event import TornadoEvent
+from jsonbot.drivers.tornado.bot import TornadoBot
+from jsonbot.lib.threads import start_new_thread
+from jsonbot.utils.lazydict import LazyDict
+from jsonbot.lib.errors import NoSuchCommand, NoInput
+from jsonbot.lib.fleet import getfleet
+from jsonbot.utils.exception import handle_exception, exceptionmsg
+from jsonbot.lib.persist import Persist
+from jsonbot.lib.plugins import plugs
+from jsonbot.utils.url import getpostdata, useragent
+from jsonbot.utils.xmpp import stripped
+from jsonbot.utils.generic import fromenc, toenc
+from jsonbot.lib.boot import boot
+from jsonbot.utils.log import setloglevel
+from jsonbot.lib.datadir import getdatadir
 from optparse import OptionParser
-from jsb.version import getversion
+from jsonbot.version import getversion
 import warnings
 
 warnings.simplefilter("ignore")
@@ -135,39 +135,39 @@ opts, args = parser.parse_args()
 opts.args = args
 
 if opts.bork:
-    import jsb.utils.exception
+    import jsonbot.utils.exception
 
-    jsb.utils.exception.bork = True
+    jsonbot.utils.exception.bork = True
 
 if opts.datadir:
     if not os.path.isdir(opts.datadir):
         os.mkdir(opts.datadir)
-    from jsb.lib.datadir import setdatadir
+    from jsonbot.lib.datadir import setdatadir
 
     setdatadir(opts.datadir)
 
 
 if opts.ssl:
-    if os.path.exists(os.getcwd() + os.sep + "jsb.crt"):
+    if os.path.exists(os.getcwd() + os.sep + "jsonbot.crt"):
         ssl_options = {
-            "certfile": os.getcwd() + os.sep + "jsb.crt",
-            "keyfile": os.getcwd() + os.sep + "jsb.key",
+            "certfile": os.getcwd() + os.sep + "jsonbot.crt",
+            "keyfile": os.getcwd() + os.sep + "jsonbot.key",
         }
-    elif os.path.exists(getdatadir() + os.sep + "jsb.crt"):
+    elif os.path.exists(getdatadir() + os.sep + "jsonbot.crt"):
         ssl_options = {
-            "certfile": getdatadir() + os.sep + "jsb.crt",
-            "keyfile": getdatadir() + os.sep + "jsb.key",
+            "certfile": getdatadir() + os.sep + "jsonbot.crt",
+            "keyfile": getdatadir() + os.sep + "jsonbot.key",
         }
     else:
         print(
-            "can't find jsb.crt and jsb.key file - run jsb-makecert <hostname> first."
+            "can't find jsonbot.crt and jsonbot.key file - run jsonbot-makecert <hostname> first."
         )
         os._exit(1)
 
 print(getversion("TORNADO"))
 
 if opts.nourl:
-    from jsb.utils.url import url_disable
+    from jsonbot.utils.url import url_disable
 
     url_disable()
 
@@ -180,12 +180,12 @@ setloglevel(opts.loglevel or "warn", not opts.nocolors)
 boot()
 
 if opts.owner:
-    from jsb.lib.users import users_boot
+    from jsonbot.lib.users import users_boot
 
     u = users_boot()
     u.make_owner(opts.owner)
 
-# jsb imports
+# jsonbot imports
 
 
 tornado = gettornado()
@@ -199,20 +199,20 @@ fleet = getfleet()
 
 bot = TornadoBot(botname="tornado-bot")
 logging.warn("tornado bot type %s" % bot.type)
-if os.path.isdir(os.getcwd() + os.sep + "jsb"):
-    ddir = os.getcwd() + os.sep + "jsb" + os.sep + "data"
+if os.path.isdir(os.getcwd() + os.sep + "jsonbot"):
+    ddir = os.getcwd() + os.sep + "jsonbot" + os.sep + "data"
 else:
-    ddir = getsource("jsb.data")
+    ddir = getsource("jsonbot.data")
 if not ddir and os.path.isdir(getdatadir() + os.sep + "data" + os.sep + "templates"):
     ddir = getdatadir() + os.sep + "data"
 if not ddir:
-    logging.warn("can't find jsb.data dir")
+    logging.warn("can't find jsonbot.data dir")
     os._exit(1)
 else:
-    logging.warn("jsb.data is at %s" % ddir)
+    logging.warn("jsonbot.data is at %s" % ddir)
 
 
-# jsb specific ioloop
+# jsonbot specific ioloop
 
 
 class JSBLoop(tornado.ioloop.IOLoop):

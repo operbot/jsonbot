@@ -15,16 +15,16 @@ import os
 import sys
 from optparse import OptionParser
 
-from jsb.drivers.console.bot import ConsoleBot
-from jsb.lib.boot import boot
-from jsb.lib.config import Config
-from jsb.lib.datadir import getdatadir
-from jsb.lib.errors import NoOwnerSet, NoSuchCommand
-from jsb.lib.exit import globalshutdown
-from jsb.lib.fleet import getfleet
-from jsb.lib.threads import start_new_thread
-from jsb.utils.log import setloglevel
-from jsb.version import getversion
+from jsonbot.drivers.console.bot import ConsoleBot
+from jsonbot.lib.boot import boot
+from jsonbot.lib.config import Config
+from jsonbot.lib.datadir import getdatadir
+from jsonbot.lib.errors import NoOwnerSet, NoSuchCommand
+from jsonbot.lib.exit import globalshutdown
+from jsonbot.lib.fleet import getfleet
+from jsonbot.lib.threads import start_new_thread
+from jsonbot.utils.log import setloglevel
+from jsonbot.version import getversion
 
 sys.path.insert(0, os.getcwd())
 
@@ -108,7 +108,7 @@ if not opts.args:
 if opts.datadir:
     if not os.path.isdir(opts.datadir):
         os.mkdir(opts.datadir)
-    from jsb.lib.datadir import setdatadir
+    from jsonbot.lib.datadir import setdatadir
 
     setdatadir(opts.datadir)
 
@@ -118,7 +118,7 @@ if opts.datadir:
 setloglevel(opts.loglevel or "error", not opts.nocolors)
 
 if opts.nourl:
-    from jsb.utils.url import url_disable
+    from jsonbot.utils.url import url_disable
 
     url_disable()
 
@@ -128,7 +128,7 @@ if opts.fast:
 else:
     boot(opts.datadir)
 
-# jsb imports
+# jsonbot imports
 
 
 # basic imports
