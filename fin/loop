@@ -9,17 +9,19 @@ import os
 import sys
 
 
-SKIP = ["env"]
+SKIP = ["env", ".git", "files", "fin"]
 
 def loop(path, txt):
     for fnn in os.listdir(path):
-        if not os.path.isdir(fnn):
-            continue
         if fnn in SKIP:
             continue
-        os.chdir(fnn)
-        popen(txt)
-        os.chdir("..")
+        if os.path.isdir(fnn):
+            print("chdir %s" % fnn)
+            os.chdir(fnn)
+            popen(txt)
+            #ppath = os.path.join(path, fnn)
+            #loop(ppath, txt)
+            os.chdir("..")
 
 
 def popen(txt):
