@@ -8,7 +8,7 @@
 
 import logging
 
-from .lib.jsonbotimport import _import
+from .lib.jsbimport import _import
 
 # basic imports
 

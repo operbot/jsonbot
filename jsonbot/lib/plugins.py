@@ -24,7 +24,7 @@ from .callbacks import (callbacks, first_callbacks, last_callbacks,
 from .commands import cmnds
 from .errors import NoSuchPlugin, RequireError, URLNotEnabled
 from .eventbase import EventBase
-from .jsonbotimport import _import, force_import
+from .jsbimport import _import, force_import
 from .morphs import inputmorphs, outputmorphs
 from .persist import Persist
 from .wait import waiter

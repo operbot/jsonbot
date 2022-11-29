@@ -15,7 +15,7 @@ import sys
 from jsonbot.lib.aliases import savealiases
 from jsonbot.lib.config import Config, getmainconfig
 from jsonbot.lib.datadir import getdatadir, makedirs
-from jsonbot.lib.jsonbotimport import _import
+from jsonbot.lib.jsbimport import _import
 from jsonbot.lib.persist import Persist
 from jsonbot.memcached import startmcdaemon
 from jsonbot.utils.exception import handle_exception
