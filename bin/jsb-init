@@ -1,0 +1,58 @@
+#!/usr/bin/env python3
+#
+#
+
+import sys
+import os
+from jsb.lib.boot import boot
+from jsb.lib.fleet import getfleet
+from jsb.lib.config import makedefaultconfig
+import logging
+from jsb.utils.log import setloglevel
+from jsb.lib.datadir import makedirs, getdatadir, setdatadir
+from optparse import OptionParser
+from jsb.version import getversion
+from jsb.utils.generic import isdebian, botuser
+import warnings
+
+warnings.simplefilter("ignore")
+
+# bootstrap
+
+
+sys.path.insert(0, os.getcwd())
+
+
+parser = OptionParser(usage="usage: %prog [options", version=getversion("INIT"))
+parser.add_option("-d", "--datadir", type="string", default=False, dest="datadir")
+parser.add_option("-l", "--loglevel", type="string", default=False, dest="loglevel")
+opts, args = parser.parse_args()
+opts.args = args
+
+
+if opts.datadir:
+    setdatadir(opts.datadir)
+
+
+setloglevel(opts.loglevel or "error")
+
+
+logging.warn(getversion("INIT"))
+
+ddir = opts.datadir or getdatadir()
+try:
+    makedirs(ddir)
+except Exception as ex:
+    print(str(ex))
+    os._exit(1)
+
+fleet = getfleet()
+makedefaultconfig("irc", ddir)
+fleet.addnametype("default-irc", "irc")
+makedefaultconfig("sxmpp", ddir)
+fleet.addnametype("default-sxmpp", "sxmpp")
+makedefaultconfig("sleek", ddir)
+fleet.addnametype("default-sleek", "sleek")
+boot(force=True)
+fleet.loadall()
+fleet.save()

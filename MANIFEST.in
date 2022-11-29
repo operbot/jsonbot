@@ -1,0 +1,4 @@
+include           MANIFEST.in
+include           Changelog
+recursive-include files *
+recursive-include jsb/data *

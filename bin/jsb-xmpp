@@ -1,0 +1,90 @@
+#!/usr/bin/env python3
+#
+#
+
+# bootstrap
+
+import sys
+from jsb.version import getversion
+import os
+import jsb
+import jsb.lib.users as users
+from jsb.utils.exception import handle_exception
+from jsb.lib.exit import globalshutdown
+from jsb.lib.datadir import setdatadir, getdatadir
+from jsb.utils.opts import makesxmppopts, makesxmppconfig
+from jsb.utils.mainloop import mainloop
+from jsb.lib.fleet import getfleet
+from jsb.lib.errors import NoOwnerSet
+from jsb.lib.config import Config, getmainconfig
+from jsb.utils.log import setloglevel
+from jsb.lib.boot import plugin_packages, boot
+from jsb.drivers.xmpp.bot import SXMPPBot
+from jsb.lib.threads import start_new_thread
+import warnings
+
+warnings.simplefilter("ignore")
+
+
+sys.path.insert(0, os.getcwd())
+
+
+# jsb impors
+
+
+# basic imports
+
+
+# options parser
+
+opts = makesxmppopts()
+if opts.datadir:
+    setdatadir(opts.datadir)
+
+print(getversion("SXMPP"))
+
+# loglevel
+
+
+setloglevel(opts.loglevel or "warn", not opts.nocolors)
+
+try:
+    cfg = makesxmppconfig(opts)
+except Exception as ex:
+    print(str(ex))
+    os._exit(1)
+got = False
+if opts.nick:
+    cfg.nick = opts.nick
+    got = True
+if opts.port:
+    cfg.port = opts.port
+    got = True
+if opts.user:
+    cfg.user = opts.user
+    got = True
+if opts.password:
+    cfg.password = opts.password
+    got = True
+if cfg.disabled:
+    cfg.disabled = 0
+    got = True
+if got:
+    cfg.save()
+
+# start bot
+
+boot(opts.datadir)
+
+try:
+    bot = SXMPPBot(cfg, register=opts.doregister)
+except NoOwnerSet as ex:
+    print("owner is not set in %s - use the -o option" % str(ex))
+    os._exit(1)
+
+if opts.channel and not opts.channel in bot.state["joinedchannels"]:
+    bot.state["joinedchannels"].append(opts.channel)
+    bot.state.save()
+
+start_new_thread(bot.boot, ())
+mainloop()
