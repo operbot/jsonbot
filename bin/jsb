@@ -1,19 +1,16 @@
 #!/usr/bin/env python3
-#
-#
-
-""" Console Bot. """
+# This file is placed in the Public Domain
 
 
-# import warnings
-# warnings.simplefilter("ignore")
+"Console Bot"
 
-# bootstrap
+
 import getpass
 import logging
 import os
 import sys
 from optparse import OptionParser
+
 
 from jsonbot.drivers.console.bot import ConsoleBot
 from jsonbot.lib.boot import boot
@@ -26,15 +23,12 @@ from jsonbot.lib.threads import start_new_thread
 from jsonbot.utils.log import setloglevel
 from jsonbot.version import getversion
 
-sys.path.insert(0, os.getcwd())
-
-
-# command line parsing
-
 
 parser = OptionParser(
     usage="usage: %prog [options] <appid>", version="%prog " + getversion()
 )
+
+
 parser.add_option(
     "-d",
     "--datadir",
@@ -43,6 +37,8 @@ parser.add_option(
     dest="datadir",
     help="datadir to use",
 )
+
+
 parser.add_option(
     "-c",
     "--channel",
@@ -51,6 +47,8 @@ parser.add_option(
     dest="channel",
     help="channel to operate on",
 )
+
+
 parser.add_option(
     "-n",
     "--name",
@@ -59,6 +57,8 @@ parser.add_option(
     dest="name",
     help="name of the console bot",
 )
+
+
 parser.add_option(
     "-l",
     "--loglevel",
@@ -67,6 +67,8 @@ parser.add_option(
     dest="loglevel",
     help="logging level",
 )
+
+
 parser.add_option(
     "-f",
     "--fast",
@@ -75,6 +77,8 @@ parser.add_option(
     dest="fast",
     help="boot fast (dont load myplugs)",
 )
+
+
 parser.add_option(
     "",
     "--nocolors",
@@ -83,6 +87,8 @@ parser.add_option(
     dest="nocolors",
     help="enable the use of colors",
 )
+
+
 parser.add_option(
     "",
     "--fleet",
@@ -91,6 +97,8 @@ parser.add_option(
     dest="fleet",
     help="start the fleet",
 )
+
+
 parser.add_option(
     "",
     "--nourl",
@@ -99,6 +107,7 @@ parser.add_option(
     dest="nourl",
     help="disable geturl functionality",
 )
+
 
 opts, args = parser.parse_args()
 opts.args = args
@@ -109,17 +118,14 @@ if opts.datadir:
     if not os.path.isdir(opts.datadir):
         os.mkdir(opts.datadir)
     from jsonbot.lib.datadir import setdatadir
-
     setdatadir(opts.datadir)
-
-# make config from cmndline options
 
 
 setloglevel(opts.loglevel or "error", not opts.nocolors)
 
+
 if opts.nourl:
     from jsonbot.utils.url import url_disable
-
     url_disable()
 
 
@@ -128,28 +134,26 @@ if opts.fast:
 else:
     boot(opts.datadir)
 
-# jsonbot imports
 
-
-# basic imports
-
-
-# start the bot
 name = opts.name or "default-console"
 cfg = Config("fleet" + os.sep + name + os.sep + "config")
+
 if not cfg.owner:
     cfg.owner = []
 userid = getpass.getuser() + "@" + cfg.uuid
 
+
 if userid not in cfg.owner:
     cfg.owner.append(userid)
     cfg.save()
+
 
 try:
     bot = ConsoleBot(cfg)
 except NoOwnerSet:
     print("the owner is not set in %s" % cfg.cfile)
     os._exit(1)
+
 
 if opts.args:
     cmndstring = ";"
@@ -172,17 +176,24 @@ if opts.args:
         pass
     os._exit(0)
 
+
 print("datadir is %s" % getdatadir())
 bot.start(False)
+
+
 if bot.maincfg.dbenable:
     print("dbtype is %s" % bot.maincfg.dbtype)
+
+
 fleet = getfleet()
 fleet.addbot(bot)
+
 
 if opts.fleet:
     bots = fleet.loadall()
     logging.error("starting fleet %s" % fleet.list())
     start_new_thread(fleet.startall, ())
+
 
 bot.startshell()
 globalshutdown()

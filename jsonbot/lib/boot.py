@@ -1,16 +1,15 @@
-# jsonbot/boot.py
-#
-#
+# This file is placed in the Public Domain.
 
-""" admin related data and functions. """
 
-# jsonbot imports
+"admin related data and functions"
+
 
 import copy
 import importlib
 import logging
 import os
 import sys
+
 
 from jsonbot.lib.aliases import savealiases
 from jsonbot.lib.config import Config, getmainconfig
@@ -22,15 +21,10 @@ from jsonbot.utils.exception import handle_exception
 from jsonbot.utils.generic import botuser, checkpermissions, isdebian
 from jsonbot.utils.lazydict import LazyDict
 
-# basic imports
-
-
-# paths
 
 sys.path.insert(0, os.getcwd())
 sys.path.insert(0, os.getcwd() + os.sep + "..")
 
-# defines
 
 try:
     import waveapi
@@ -53,6 +47,7 @@ except ImportError:
         "myplugs",
     ]
 
+
 default_plugins = [
     "jsonbot.plugs.core.admin",
     "jsonbot.plugs.core.dispatch",
@@ -60,7 +55,9 @@ default_plugins = [
     "jsonbot.lib.periodical",
 ]
 
+
 logging.info("default plugins are %s" % str(default_plugins))
+
 
 loaded = False
 cmndtable = None
@@ -73,8 +70,6 @@ timestamps = None
 plugwhitelist = None
 plugblacklist = None
 cpy = copy.deepcopy
-
-# scandir function
 
 
 def scandir(d, dbenable=False):
@@ -105,8 +100,6 @@ def scandir(d, dbenable=False):
     return changed
 
 
-# boot function
-
 
 def boot(
     ddir=None,
@@ -118,7 +111,6 @@ def boot(
     clear=False,
     loadall=False,
 ):
-    """initialize the bot."""
     global plugin_packages
     if not ongae:
         try:
